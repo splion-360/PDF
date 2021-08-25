@@ -12,7 +12,7 @@ This package makes use of dialogboxes created using
 #### **spaCy Setup**:
 * _spaCy_ is an open-source software library for advanced natural language processing, written in the programming languages Python and Cython.
   For the spacy setup, you can follow the webguide provided in the official site of [spacy](https://spacy.io/usage)
-* The scope of the package for this repository is for summarising the contents of a text file
+* The scope of the package for this repository is to summarise the contents of a text file
 
 
   * Activate the python command line and type the following commands subsequently,\
