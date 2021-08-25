@@ -13,6 +13,6 @@ This package makes use of dialogboxes created using
   - Follow the steps given in the script to achieve required tasks
   
   *Note*: Python versions may vary. Please run  
-  `python --version` before running the [main.py]() script
+  `python --version` before running the [main](./main.py) script
 
   
