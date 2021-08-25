@@ -1,7 +1,7 @@
 # PDF
 ### __A repository for performing simple PDF operations__
 This package makes use of dialogboxes created using 
-![Qt Widgets]("https://pythonspot.com/pyqt5-file-dialog/") of **PyQt5** package
+[Qt Widgets](https://pythonspot.com/pyqt5-file-dialog/) of **PyQt5** package
 
 #### **Setup**:
   * Clone this repository into your local machine
