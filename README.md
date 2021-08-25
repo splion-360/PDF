@@ -15,7 +15,7 @@ This package makes use of dialogboxes created using
 * This package here is used for summarising the contents of a text file
 
 
-  * Activate the python command line and type the following commands in subsequent cells,\
+  * Activate the python command line and type the following commands subsequently,\
     `pip install -U pip setuptools wheel`\
     `pip install -U spacy`\
     `python -m spacy download en_core_web_sm`
