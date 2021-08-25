@@ -116,3 +116,5 @@ class PDF(App):
         print("DONE!!!")
         f.close()
         print(f"OCR performed and saved at {os.path.dirname(outfile)}")
+
+
