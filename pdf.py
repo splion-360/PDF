@@ -128,6 +128,6 @@ class PDF(App):
 
         for _,doc in tqdm(enumerate(doclist)):
             outname = os.path.basename(doc)[:-4]
-            finalpath = pathname + outname +'.pdf'
+            finalpath = pathname + outname +'pdf'
             convert(doc,finalpath)
         print('Done!!!')
