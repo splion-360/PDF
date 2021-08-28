@@ -6,6 +6,8 @@ import pdf2image as pi
 from PIL import Image
 from tqdm import tqdm
 from docx2pdf import convert
+import warnings
+warnings.filterwarnings("ignore")
 class App(QWidget):
 
     def __init__(self):
@@ -24,21 +26,21 @@ class App(QWidget):
     def openFileNameDialog(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);; Text (*.txt);; PDF (*.pdf)", options=options)
+        fileName, _ = QFileDialog.getOpenFileName(self,"Open", "","All Files (*);; Text (*.txt);; PDF (*.pdf)", options=options)
         if fileName:
             return fileName
     
     def openFileNamesDialog(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        files, _ = QFileDialog.getOpenFileNames(self,"QFileDialog.getOpenFileNames()", "","All Files (*);; Text (*.txt);; PDF (*.pdf)", options=options)
+        files, _ = QFileDialog.getOpenFileNames(self,"Open", "","All Files (*);; Text (*.txt);; PDF (*.pdf)", options=options)
         if files:
             return files
     
     def saveFileDialog(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()","","All Files (*);; Text (*.txt);; PDF (*.pdf)", options=options)
+        fileName, _ = QFileDialog.getSaveFileName(self,"Save as","","All Files (*);; Text (*.txt);; PDF (*.pdf)", options=options)
         if fileName:
             return fileName
     
@@ -120,14 +122,15 @@ class PDF(App):
     def doctopdf(self):
         doclist = App.openFileNamesDialog(self)
 
-        if len(doclist) == 0:
+        if doclist == None:
             print("Terminated")
             return
         savedir = App.saveFileDialog(self)
         pathname = os.path.dirname(savedir)
 
-        for _,doc in tqdm(enumerate(doclist)):
-            outname = os.path.basename(doc)[:-4]
-            finalpath = pathname + outname +'pdf'
+        for doc in tqdm(doclist):
+            outname = os.path.basename(doc)[:-4] + 'pdf'
+            finalpath = os.path.join(pathname,outname)
             convert(doc,finalpath)
+            
         print('Done!!!')
