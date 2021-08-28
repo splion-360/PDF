@@ -7,7 +7,7 @@ This package makes use of dialogboxes created using
 #### **Basic Setup**:
 
   * Clone this repository into your local machine
-  * Install the required packages in the command line using the code `pip install -r requirements.txt`
+  * Install the required packages using the code `pip install -r requirements.txt` from the command line
   
 #### **spaCy Setup**:
 * _spaCy_ is an open-source software library for advanced natural language processing, written in the programming languages Python and Cython.
