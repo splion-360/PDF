@@ -23,8 +23,11 @@ class Summarize(App):
             linelist = []
             for line in lines:
                 linelist.append(line.strip('\n'))
-            
+
+        
+
         filelines = ''.join(linelist)
+        self.ref = filelines
         
         return filelines
             
@@ -63,8 +66,16 @@ class Summarize(App):
     
     
     def summariser(self,sentence_scores): 
-        
-        summarized_sentences = nlargest(5, sentence_scores, key=sentence_scores.get)
+        nwords = self.ref.split(' ')
+        if len(nwords)>600:
+            summarized_sentences = nlargest(15, sentence_scores, key=sentence_scores.get)
+
+        elif len(nwords)>100 and len(nwords)<=600:
+            summarized_sentences = nlargest(10, sentence_scores, key=sentence_scores.get)
+            
+        else:
+            summarized_sentences = nlargest(7, sentence_scores, key=sentence_scores.get)
+
         final_sentences = [word.text for word in summarized_sentences ]
         summary = ' '.join(final_sentences)
         
