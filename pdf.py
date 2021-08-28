@@ -5,7 +5,7 @@ import pytesseract as pt
 import pdf2image as pi
 from PIL import Image
 from tqdm import tqdm
-
+from docx2pdf import convert
 class App(QWidget):
 
     def __init__(self):
@@ -117,4 +117,17 @@ class PDF(App):
         f.close()
         print(f"OCR performed and saved at {os.path.dirname(outfile)}")
 
+    def doctopdf(self):
+        doclist = App.openFileNamesDialog(self)
 
+        if len(doclist) == 0:
+            print("Terminated")
+            return
+        savedir = App.saveFileDialog(self)
+        pathname = os.path.dirname(savedir)
+
+        for _,doc in tqdm(enumerate(doclist)):
+            outname = os.path.basename(doc)[:-4]
+            finalpath = pathname + outname +'.pdf'
+            convert(doc,finalpath)
+        print('Done!!!')

@@ -2,6 +2,7 @@ from pdf import PDF
 from PyQt5.QtWidgets import QApplication
 import sys
 import argparse
+
 from summariser import Summarize
 from colorama import Fore
 import os
@@ -18,6 +19,8 @@ parser.add_argument('--su','--summarize',action='store_true',\
                     help='Summarizes a given textfile')
 parser.add_argument('--sa','--sumsave',action='store_true',\
                     help='Saves the summary as textfile (Optional). Use it along with --su. \nExample: python3 main.py --su --sa')         
+parser.add_argument('--c','--converter',action='store_true',\
+                    help='Converts docx to pdf')
 args = parser.parse_args()
 app = QApplication(sys.argv)
 pdf = PDF()
@@ -27,6 +30,9 @@ elif args.m:
     pdf.pdfmerger()
 elif args.o:
     pdf.perform_ocr()
+elif args.c:
+    pdf.doctopdf()
+
 elif args.su:
     summ = Summarize()
     filelines =  summ.get_file_and_lines()
