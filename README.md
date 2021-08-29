@@ -3,6 +3,7 @@
 This package makes use of dialogboxes created using 
 [Qt Widgets](https://pythonspot.com/pyqt5-file-dialog/) of **PyQt5** package
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 ## **Setup**:
 #### **Basic Setup**:
 
