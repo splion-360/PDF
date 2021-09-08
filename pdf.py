@@ -8,6 +8,8 @@ from tqdm import tqdm
 from docx2pdf import convert
 import warnings
 from colorama import Fore
+import time
+
 warnings.filterwarnings("ignore")
 
 class App(QWidget):
@@ -62,13 +64,15 @@ class PDF(App):
             merger.append(pdf)
             
         outputname = App.saveFileDialog(self)
-        
-        merger.write(outputname)
+        filename = os.path.join(os.path.dirname(outputname),os.path.basename(pdflist[0])+'.pdf')
+        merger.write(filename)
         print(Fore.GREEN,'DONE !!!')
         print()
-        print(Fore.GREEN,f"Merged and saved at {outputname}")
-        
+        print(Fore.GREEN,f"Merged and saved at {os.path.dirname(outputname)}")
         merger.close()
+        time.sleep(0.5)
+        os.startfile(filename)
+        
         
     def pdfsplitter(self):
         filepath = App.openFileNameDialog(self)
@@ -123,6 +127,8 @@ class PDF(App):
         print()
         f.close()
         print(Fore.GREEN,f"OCR performed and saved at {os.path.dirname(outfile)}")
+        time.sleep(0.5)
+        os.startfile(outfile)
 
 
     def doctopdf(self):
@@ -145,6 +151,8 @@ class PDF(App):
             i+=1
         if i == len(doclist):
             print(Fore.GREEN,'DONE !!!')
+            time.sleep(0.5)
+            os.startfile(finalpath)
         else:
             print(Fore.RED,'Could not convert!!!')
 
@@ -171,8 +179,12 @@ class PDF(App):
         outname = os.path.basename(pdf)[:-4]+'_rotated.pdf'
         with open(os.path.join(pathname,outname),'wb') as file:
             rotate_writer.write(file)
+            
         print(Fore.GREEN,'DONE !!!')
+        time.sleep(0.5)
+        os.startfile(os.path.join(pathname,outname))
 
+        
 
 
 
