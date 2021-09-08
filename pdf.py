@@ -7,7 +7,9 @@ from PIL import Image
 from tqdm import tqdm
 from docx2pdf import convert
 import warnings
+from colorama import Fore
 warnings.filterwarnings("ignore")
+
 class App(QWidget):
 
     def __init__(self):
@@ -53,7 +55,7 @@ class PDF(App):
         merger = PdfFileMerger()
         pdflist = App.openFileNamesDialog(self)
         if pdflist == None:
-            print("Terminated")
+            print(Fore.YELLOW,"Terminated")
             return
 
         for pdf in pdflist:
@@ -62,8 +64,9 @@ class PDF(App):
         outputname = App.saveFileDialog(self)
         
         merger.write(outputname)
-        
-        print(f"Merged and saved at {outputname}")
+        print(Fore.GREEN,'DONE !!!')
+        print()
+        print(Fore.GREEN,f"Merged and saved at {outputname}")
         
         merger.close()
         
@@ -71,7 +74,7 @@ class PDF(App):
         filepath = App.openFileNameDialog(self)
 
         if filepath == None:
-            print("Terminated")
+            print(Fore.YELLOW,"Terminated")
             return
 
         inputpdf = PdfFileReader(open(filepath, "rb"))
@@ -84,14 +87,15 @@ class PDF(App):
             output.addPage(inputpdf.getPage(i))
             with open(f"{os.path.join(base,os.path.basename(path))}%s.pdf" % c, "wb") as outputStream:
                 output.write(outputStream)
-
-        print(f"Split and saved at {os.path.dirname(filepath)}")
+        print(Fore.GREEN,'DONE !!!')
+        print()
+        print(Fore.GREEN,f"Split and saved at {os.path.dirname(filepath)}")
 
     def perform_ocr(self):
         image_counter = 1
         path = App.openFileNameDialog(self)
         if path == None:
-            print("Terminated")
+            print(Fore.YELLOW,"Terminated")
             return 
         pages = pi.convert_from_path(path,dpi=500)
 
@@ -99,7 +103,7 @@ class PDF(App):
             filename = "page_"+str(image_counter)+".jpg"
             page.save(filename,'JPEG')
             image_counter+=1
-        print("DONE!!!")
+        print(Fore.GREEN,'DONE !!!')
         filelimit = image_counter-1
 
         path = App.saveFileDialog(self)
@@ -115,22 +119,61 @@ class PDF(App):
 
             if os.path.exists(filename):
                 os.remove(filename)    
-        print("DONE!!!")
+        print(Fore.GREEN,'DONE !!!')
+        print()
         f.close()
-        print(f"OCR performed and saved at {os.path.dirname(outfile)}")
+        print(Fore.GREEN,f"OCR performed and saved at {os.path.dirname(outfile)}")
+
 
     def doctopdf(self):
         doclist = App.openFileNamesDialog(self)
 
         if doclist == None:
-            print("Terminated")
+            print(Fore.YELLOW,"Terminated")
             return
         savedir = App.saveFileDialog(self)
         pathname = os.path.dirname(savedir)
-
+        i = 0
         for doc in tqdm(doclist):
             outname = os.path.basename(doc)[:-4] + 'pdf'
             finalpath = os.path.join(pathname,outname)
-            convert(doc,finalpath)
-            
-        print('Done!!!')
+            try:
+                convert(doc,finalpath)
+            except OSError:
+                print(Fore.RED,'Only mac and windows')
+                break
+            i+=1
+        if i == len(doclist):
+            print(Fore.GREEN,'DONE !!!')
+        else:
+            print(Fore.RED,'Could not convert!!!')
+
+
+
+    def rotatepdf(self,degreetorotate,flag='CW'):
+        pdf = App.openFileNameDialog(self)
+        if pdf == None:
+            print(Fore.YELLOW,"Terminated")
+            return
+        rotate_reader = PdfFileReader(open(pdf, 'rb'))
+        rotate_writer = PdfFileWriter()
+        savedir = App.saveFileDialog(self)
+        pathname = os.path.dirname(savedir)
+
+        for pagenum in tqdm(range(rotate_reader.numPages)):
+            page = rotate_reader.getPage(pagenum)
+            if flag=='CW':
+                page.rotateClockwise(degreetorotate)
+            else:
+                page.rotateCounterClockwise(degreetorotate)
+            rotate_writer.addPage(page)
+
+        outname = os.path.basename(pdf)[:-4]+'_rotated.pdf'
+        with open(os.path.join(pathname,outname),'wb') as file:
+            rotate_writer.write(file)
+        print(Fore.GREEN,'DONE !!!')
+
+
+
+
+

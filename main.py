@@ -21,6 +21,10 @@ parser.add_argument('--sa','--sumsave',action='store_true',\
                     help='Saves the summary as textfile (Optional). Use it along with --su. \nExample: python3 main.py --su --sa')         
 parser.add_argument('--c','--converter',action='store_true',\
                     help='Converts docx to pdf')
+parser.add_argument('--r','--rotater',action='store',nargs='+',\
+    help='Rotates the pages of a pdf to the desired amount in the clockwise direction as specified by the user.\n Format: python3 main.py --r <CW or CCW> <amount of rotation>')
+
+
 args = parser.parse_args()
 app = QApplication(sys.argv)
 pdf = PDF()
@@ -32,6 +36,10 @@ elif args.o:
     pdf.perform_ocr()
 elif args.c:
     pdf.doctopdf()
+elif args.r:
+    dirtorotate = args.r[0]
+    degreetorotate = float(args.r[1])
+    pdf.rotatepdf(degreetorotate,flag=dirtorotate)
 
 elif args.su:
     summ = Summarize()
