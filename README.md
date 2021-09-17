@@ -26,8 +26,6 @@ This package makes use of dialogboxes created using
   * Open the command line and navigate to the cloned repository and run  `python main.py -h` to know about the usage of the helper functions 
   * Follow the steps given in the script to achieve required tasks
 
-## **Tkinter**:
-* [Tkinter](./tkinter/) contains the launcher file which establishes a user interface using tkinter package to perform the required tasks.
   
 >*Note*:
 >> Python versions may vary. Please run `python --version` before running the [main](./main.py) script. Also, the `perform_ocr` function is compatible only with Linux           >> Operating Systems due to the `Poppler` package issues. This will be rectified later 
